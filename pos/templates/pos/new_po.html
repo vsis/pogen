@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        {% load static %}
         <title>Genereador de Órdenes de Compra </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,8 @@
     <body>
         <div class="container" role="main">
             <div class="page-header">
-                <span>yapo.cl logo</span>
+                <img src="{% static 'pos/logo.jpeg'  %}">
+                <span class="pull-right pull-down">Nombre de usuario <a href="#">salir</a></span>
             </div>
             <div id="newPo" class="carousel slide" data-ride="carousel" data-wrap="false" data-interval="0">
                 <ol class="carousel-indicators">
@@ -22,44 +24,52 @@
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
                         <div class="jumbotron" style="height:500px">
-                            <span>Paso 1: Sobre ti</span>
+                            <h4>Paso 1: Sobre ti</h4>
                             <input type="text" class="form-control" id="userName" placeholder="Tu nombre">
                             <br>
-                            <select class="form-control" id="userArea" placeholder="Tu Área"></select>
+                            <select class="form-control" id="userArea" placeholder="Tu Área">
+                                {% for area in areas %}
+                                <option value="{{ area.id }}">{{area.short_name}} - {{ area.long_name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                     <div class="item">
                         <div class="jumbotron" style="height:500px">
-                            <span>Paso 2: Proveedor</span>
-                            <select class="form-control" id="userArea" placeholder="Elige un proveedor"></select>
+                            <h4>Paso 2: Proveedor</h4>
+                            <select class="form-control" id="provider" placeholder="Elige un proveedor">
+                                {% for provider in providers %}
+                                <option value="{{ provider.id }}">{{ provider.name }}</option>
+                                {% endfor %}
+                            </select>
                             <br>
                             <div class="row marketing">
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="providerName">
+                                    <input type="text" class="form-control" id="providerName" placeholder="Nombre del proveedor" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerBusiness">
+                                    <input type="text" class="form-control" id="providerBusiness" placeholder="Giro" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerRut">
+                                    <input type="text" class="form-control" id="providerRut" placeholder="Rut" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerAddress">
+                                    <input type="text" class="form-control" id="providerAddress" placeholder="Dirección" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerPhone">
+                                    <input type="text" class="form-control" id="providerPhone" placeholder="Teléfono" disabled>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="contactName">
+                                    <input type="text" class="form-control" id="contactName" placeholder="Nombre del contacto" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="contactArea">
+                                    <input type="text" class="form-control" id="contactArea" placeholder="Área del contacto" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="contactPhone">
+                                    <input type="text" class="form-control" id="contactPhone" placeholder="Teléfono del contacto" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="contactEmail">
+                                    <input type="text" class="form-control" id="contactEmail" placeholder="Email del contacto" disabled>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="jumbotron" style="height:500px">
-                            <span>Paso 3: Productos</span>
+                            <h4>Paso 3: Productos</h4>
                             <div class="row marketing">
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" placeholder="Concepto">
