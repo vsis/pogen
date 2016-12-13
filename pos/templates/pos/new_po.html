@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Genereador de Órdenes de Compra </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="container" role="main">
+            <div class="page-header">
+                <span>yapo.cl logo</span>
+            </div>
+            <div id="newPo" class="carousel slide" data-ride="carousel" data-wrap="false" data-interval="0">
+                <ol class="carousel-indicators">
+                    <li class="active" data-target="#newPo" data-slide-to="0"></li>
+                    <li class="" data-target="#newPo" data-slide-to="1"></li>
+                    <li class="" data-target="#newPo" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner" role="listbox">
+                    <div class="item active">
+                        <div class="jumbotron" style="height:500px">
+                            <span>Paso 1: Sobre ti</span>
+                            <input type="text" class="form-control" id="userName" placeholder="Tu nombre">
+                            <br>
+                            <select class="form-control" id="userArea" placeholder="Tu Área"></select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="jumbotron" style="height:500px">
+                            <span>Paso 2: Proveedor</span>
+                            <select class="form-control" id="userArea" placeholder="Elige un proveedor"></select>
+                            <br>
+                            <div class="row marketing">
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="providerName">
+                                    <br>
+                                    <input type="text" class="form-control" id="providerBusiness">
+                                    <br>
+                                    <input type="text" class="form-control" id="providerRut">
+                                    <br>
+                                    <input type="text" class="form-control" id="providerAddress">
+                                    <br>
+                                    <input type="text" class="form-control" id="providerPhone">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="contactName">
+                                    <br>
+                                    <input type="text" class="form-control" id="contactArea">
+                                    <br>
+                                    <input type="text" class="form-control" id="contactPhone">
+                                    <br>
+                                    <input type="text" class="form-control" id="contactEmail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="jumbotron" style="height:500px">
+                            <span>Paso 3: Productos</span>
+                            <div class="row marketing">
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" placeholder="Concepto">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" placeholder="Cantidad">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" placeholder="Importe">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" placeholder="Moneda">
+                                </div>
+                            </div>
+                            <br>
+                            <a class="btn btn-lg btn-success" href="#" role="button">Vista previa</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="#newPo" class="left carousel-control" role="button" data-slide="prev" style="width:30px; background-image:none">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a href="#newPo" class="right carousel-control" role="button" data-slide="next" style="width:30px; background-image:none">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
+

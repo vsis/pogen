@@ -8,7 +8,8 @@ class DetailView(generic.DetailView):
     template_name = 'pos/detail.html'
 
 def new_po(request):
-    pass
+    context = {}
+    return render(request, 'pos/new_po.html', context)
 
 def post_po(request):
     pass
