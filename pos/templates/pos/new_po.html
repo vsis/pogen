@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="{% static 'pos/functions.js'  %}"></script>
     </head>
     <body>
         <div class="container" role="main">
@@ -23,7 +24,7 @@
                 </ol>
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
-                        <div class="jumbotron" style="height:500px">
+                        <div class="jumbotron" style="height:600px">
                             <h4>Paso 1: Sobre ti</h4>
                             <input type="text" class="form-control" id="userName" placeholder="Tu nombre">
                             <br>
@@ -35,40 +36,51 @@
                         </div>
                     </div>
                     <div class="item">
-                        <div class="jumbotron" style="height:500px">
+                        <div class="jumbotron" style="height:600px">
                             <h4>Paso 2: Proveedor</h4>
-                            <select class="form-control" id="provider" placeholder="Elige un proveedor">
+                            <select class="form-control" id="provider" placeholder="Elige un proveedor" onchange="show_provider($('#provider').val())" >
                                 {% for provider in providers %}
                                 <option value="{{ provider.id }}">{{ provider.name }}</option>
                                 {% endfor %}
                             </select>
                             <br>
-                            <div class="row marketing">
+                            {% for provider in providers %}
+                            <div class="provider row marketing hidden" id="provider_{{ provider.id }}">
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="providerName" placeholder="Nombre del proveedor" disabled>
+                                    <label for="providerName">Nombre del proveedor</label>
+                                    <input type="text" class="form-control" id="providerName" value="{{ provider.name }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerBusiness" placeholder="Giro" disabled>
+                                    <label for="providerBusines">Giro</label>
+                                    <input type="text" class="form-control" id="providerBusiness" value="{{ provider.business  }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerRut" placeholder="Rut" disabled>
+                                    <label for="providerRut">Rut</label>
+                                    <input type="text" class="form-control" id="providerRut" value="{{ provider.rut  }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerAddress" placeholder="Dirección" disabled>
+                                    <label for="providerAddress">Dirección</label>
+                                    <input type="text" class="form-control" id="providerAddress" value="{{ provider.address  }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="providerPhone" placeholder="Teléfono" disabled>
+                                    <label for="providerPhone">Teléfono</label>
+                                    <input type="text" class="form-control" id="providerPhone" value="{{ provider.phone}}"  disabled>
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="contactName" placeholder="Nombre del contacto" disabled>
+                                    <label for="contactName">Nombre del contacto</label>
+                                    <input type="text" class="form-control" id="contactName" value="{{ provider.contact_name  }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="contactArea" placeholder="Área del contacto" disabled>
+                                    <label for="contactArea">Área del contacto</label>
+                                    <input type="text" class="form-control" id="contactArea" value="{{ provider.contact_area }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="contactPhone" placeholder="Teléfono del contacto" disabled>
+                                    <label for="contactPhone">Teléfono del contacto</label>
+                                    <input type="text" class="form-control" id="contactPhone" value="{{ provider.contact_phone }}" disabled>
                                     <br>
-                                    <input type="text" class="form-control" id="contactEmail" placeholder="Email del contacto" disabled>
+                                    <label for="contactEmail">Email del contacto</label>
+                                    <input type="text" class="form-control" id="contactEmail" value="{{ provider.contact_email }}" disabled>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="item">
-                        <div class="jumbotron" style="height:500px">
+                        <div class="jumbotron" style="height:600px">
                             <h4>Paso 3: Productos</h4>
                             <div class="row marketing">
                                 <div class="col-sm-6">
