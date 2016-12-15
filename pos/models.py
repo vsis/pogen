@@ -35,16 +35,36 @@ class Provider(models.Model):
         return self.name
 
 
+class Currency(models.Model):
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
+
+class PaymentMethod(models.Model):
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
+class PaymentCondition(models.Model):
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
+
 class PurchaseOrder(models.Model):
     yapo_user = models.ForeignKey(YapoUser, null=True, blank=True)
     provider = models.ForeignKey(Provider, null=True, blank=True)
     folio_number = models.CharField(max_length=128, null=True)
-    payment_conditions = models.CharField(max_length=128, null=True, blank=True)
-    payment_method = models.CharField(max_length=128, null=True, blank=True)
+    payment_conditions = models.ForeignKey(PaymentCondition, null=True, blank=True)
+    payment_method = models.ForeignKey(PaymentMethod, null=True, blank=True)
     contract_number = models.CharField(max_length=128, null=True, blank=True)
     quotation_order = models.CharField(max_length=128, null=True, blank=True)
     total_price = models.IntegerField(null=True, blank=True)
-    currency = models.CharField(max_length=128, null=True, blank=True)
+    currency = models.ForeignKey(Currency, null=True, blank=True)
 
     def __str__(self):
         return self.folio_number
@@ -55,7 +75,7 @@ class PurchaseOrderDetail(models.Model):
     description = models.CharField(max_length=128, null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
-    currency = models.CharField(max_length=8)
+    currency = models.ForeignKey(Currency, null=True, blank=True)
 
     def __str__(self):
         return self.description

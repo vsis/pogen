@@ -82,7 +82,7 @@
                     <div class="item">
                         <div class="jumbotron" style="height:600px">
                             <h4>Paso 3: Productos</h4>
-                            <div class="row marketing">
+                            <div id="po_details" class="row marketing">
                                 <div class="col-sm-6">
                                     <input type="text" class="form-control" placeholder="Concepto">
                                 </div>
@@ -96,6 +96,15 @@
                                     <input type="text" class="form-control" placeholder="Moneda">
                                 </div>
                             </div>
+                            <span id="add_detail" class="btn">
+                                <a href="#">Nuevo elemento</a>
+                            </span>
+                            <script>
+                                $("#add_detail").click(function() {
+                                    $("#po_details").clone(true).insertBefore("#add_detail");
+                                    return false;
+                                });
+                            </script>
                             <br>
                             <a class="btn btn-lg btn-success" href="#" role="button">Vista previa</a>
                         </div>

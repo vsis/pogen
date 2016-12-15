@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Area, YapoUser, Provider, PurchaseOrder, PurchaseOrderDetail
+from .models import Currency, PaymentMethod, PaymentCondition, Area, YapoUser, Provider, PurchaseOrder, PurchaseOrderDetail
 
 
 class DetailInline(admin.StackedInline):
@@ -12,6 +12,9 @@ class PurchaseOrderAdmin(admin.ModelAdmin):
 
 
 
+admin.site.register(Currency)
+admin.site.register(PaymentMethod)
+admin.site.register(PaymentCondition)
 admin.site.register(Area)
 admin.site.register(YapoUser)
 admin.site.register(Provider)
