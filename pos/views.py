@@ -10,7 +10,7 @@ class ListView(generic.ListView):
     context_object_name = 'pos_list'
  
     def get_queryset(self):
-        return PurchaseOrder.objects.all()
+        return PurchaseOrder.objects.filter(is_visible=True)
 
 class DetailView(generic.DetailView):
     model = PurchaseOrder

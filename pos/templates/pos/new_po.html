@@ -27,8 +27,7 @@
                 <div class="carousel-inner" role="listbox">
                     <div class="item active">
                         <div class="jumbotron" style="height:600px">
-                            <h4>Paso 1: Sobre ti</h4>
-                            <input name="user_name" type="text" class="form-control" id="userName" placeholder="Tu nombre">
+                            <h4>Paso 1: Área</h4>
                             <br>
                             <select name="user_area" class="form-control" id="userArea" placeholder="Tu Área">
                                 {% for area in areas %}
@@ -85,10 +84,10 @@
                         <div class="jumbotron" style="height:600px">
                             <h4>Paso 3: Productos</h4>
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-xs-2">
                                     <label>Moneda: </label>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <select name="currency" class="form-control" id="currency">
                                         {% for currency in currencies%}
                                         <option value="{{ currency.id }}">{{ currency.name }}</option>
@@ -97,23 +96,27 @@
                                 </div>
                             </div>
                             <div id="po_details" class="row marketing">
-                                <div class="col-sm-6">
+                                <div class="col-xs-6">
                                     <input name="detail_name[]" type="text" class="form-control" placeholder="Concepto">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-xs-2">
                                     <input name="quantity[]" type="text" class="form-control" placeholder="Cantidad">
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-xs-2">
                                     <input name="price[]" type="text" class="form-control" placeholder="Importe">
                                 </div>
                             </div>
                             <span id="add_detail" class="btn">
-                                <a href="#">Nuevo elemento</a>
+                                <a href="#" class="btn btn-md btn-info">Nuevo elemento</a>
                             </span>
                             <script>
+                                var detail_rows=0
                                 $("#add_detail").click(function() {
-                                    $("#po_details").clone(true).insertBefore("#add_detail");
-                                    return false;
+                                        if (detail_rows < 6){
+                                            $("#po_details").clone(true).insertBefore("#add_detail");
+                                            detail_rows++;
+                                        }
+                                        return false;
                                 });
                             </script>
                             <br>
@@ -126,7 +129,7 @@
                                 <div class="col-sm-3">
                                     <label>Método de pago:</label>
                                 </div>
-                            <div class="col-sm-3">
+                            <div class="col-xs-3">
                                 <select name="payment_method" class="form-control" id="payment_method">
                                         {% for method in payment_methods %}
                                         <option value="{{ method.id }}">{{ method.name }}</option>
@@ -135,10 +138,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <label>Condiciones de pago:</label>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <select name="payment_condition" class="form-control" id="payment_method">
                                         {% for condition in payment_conditions %}
                                         <option value="{{ condition.id }}">{{ condition.name }}</option>
@@ -147,22 +150,22 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <label>Número de contrato</label>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <input name="contract_number" id="contract_number" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <label>Orden de cotización</label>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-xs-3">
                                     <input name="quotation_order" id="quotation_order" class="form-control">
                                 </div>
                             </div>
-                            <input type="submit" class="btn btn-lg btn-success" value="Vista previa">
+                            <input type="submit" class="btn btn-md btn-success" value="Vista previa">
                         </div>
                     </div>
                 
