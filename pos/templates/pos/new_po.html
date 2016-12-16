@@ -10,7 +10,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script src="{% static 'pos/functions.js'  %}"></script>
     </head>
-    <body>
+    <body><form method="POST" action="{% url 'pos:preview_po' %}">
+        {% csrf_token %}
         <div class="container" role="main">
             <div class="page-header">
                 <img src="{% static 'pos/logo.jpeg'  %}">
@@ -26,9 +27,9 @@
                     <div class="item active">
                         <div class="jumbotron" style="height:600px">
                             <h4>Paso 1: Sobre ti</h4>
-                            <input type="text" class="form-control" id="userName" placeholder="Tu nombre">
+                            <input name="user_name" type="text" class="form-control" id="userName" placeholder="Tu nombre">
                             <br>
-                            <select class="form-control" id="userArea" placeholder="Tu Área">
+                            <select name="user_area" class="form-control" id="userArea" placeholder="Tu Área">
                                 {% for area in areas %}
                                 <option value="{{ area.id }}">{{area.short_name}} - {{ area.long_name }}</option>
                                 {% endfor %}
@@ -38,7 +39,7 @@
                     <div class="item">
                         <div class="jumbotron" style="height:600px">
                             <h4>Paso 2: Proveedor</h4>
-                            <select class="form-control" id="provider" placeholder="Elige un proveedor" onchange="show_provider($('#provider').val())" >
+                            <select name="provider" class="form-control" id="provider" placeholder="Elige un proveedor" onchange="show_provider($('#provider').val())" >
                                 {% for provider in providers %}
                                 <option value="{{ provider.id }}">{{ provider.name }}</option>
                                 {% endfor %}
@@ -82,18 +83,27 @@
                     <div class="item">
                         <div class="jumbotron" style="height:600px">
                             <h4>Paso 3: Productos</h4>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <label>Moneda: </label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="currency" class="form-control" id="currency">
+                                        {% for currency in currencies%}
+                                        <option value="{{ currency.id }}">{{ currency.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
                             <div id="po_details" class="row marketing">
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Concepto">
+                                    <input name="detail_name[]" type="text" class="form-control" placeholder="Concepto">
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Cantidad">
+                                    <input name="quantity[]" type="text" class="form-control" placeholder="Cantidad">
                                 </div>
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Importe">
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" placeholder="Moneda">
+                                    <input name="price[]" type="text" class="form-control" placeholder="Importe">
                                 </div>
                             </div>
                             <span id="add_detail" class="btn">
@@ -106,11 +116,57 @@
                                 });
                             </script>
                             <br>
-                            <a class="btn btn-lg btn-success" href="#" role="button">Vista previa</a>
                         </div>
                     </div>
+                    <div class="item">
+                        <div class="jumbotron" style="height:600px">
+                            <h4>Paso 4: Pago</h4>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Método de pago:</label>
+                                </div>
+                            <div class="col-sm-3">
+                                <select name="payment_method" class="form-control" id="payment_method">
+                                        {% for method in payment_methods %}
+                                        <option value="{{ method.id }}">{{ method.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Condiciones de pago:</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="payment_condition" class="form-control" id="payment_method">
+                                        {% for condition in payment_conditions %}
+                                        <option value="{{ condition.id }}">{{ condition.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Número de contrato</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input name="contract_number" id="contract_number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Orden de cotización</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input name="quotation_order" id="quotation_order" class="form-control">
+                                </div>
+                            </div>
+                            <input type="submit" class="btn btn-lg btn-success" value="Vista previa">
+                        </div>
+                    </div>
+                
                 </div>
-                <a href="#newPo" class="left carousel-control" role="button" data-slide="prev" style="width:30px; background-image:none">
+<a href="#newPo" class="left carousel-control" role="button" data-slide="prev" style="width:30px; background-image:none">
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
                 </a>
@@ -120,6 +176,6 @@
                 </a>
             </div>
         </div>
-    </body>
+    </form></body>
 </html>
 

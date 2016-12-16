@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 class Area(models.Model):
@@ -65,10 +66,24 @@ class PurchaseOrder(models.Model):
     quotation_order = models.CharField(max_length=128, null=True, blank=True)
     total_price = models.IntegerField(null=True, blank=True)
     currency = models.ForeignKey(Currency, null=True, blank=True)
+    is_visible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.folio_number
 
+    def set_folio_number(self, short_name_area=None):
+        self.folio_number = datetime.now().strftime('%Y%m%d')
+        if short_name_area != None:
+            self.folio_number = short_name_area + self.folio_number
+
+    def set_total_price(self):
+        self.total_price = 0
+        for detail in self.purchaseorderdetail_set.all():
+            self.total_price += detail.price
+
+    def set_order_data(self, short_area_name=None):
+        self.set_folio_number(short_area_name)
+        self.set_total_price()
 
 class PurchaseOrderDetail(models.Model):
     purchase_order = models.ForeignKey(PurchaseOrder, null=True, blank=True)
