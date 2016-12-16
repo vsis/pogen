@@ -46,13 +46,6 @@ def preview_po(request):
         payment_condition = request.POST.get('payment_condition')
         contract_number = request.POST.get('contract_number')
         user_area = request.POST.get('user_area')
-        short_name_area = None
-        if user_area != None:
-            try:
-                area = Area.objects.get(pk=user_area)
-                short_name_area = area.short_name
-            except Area.DoesNotExist:
-                pass
         # create purchase order
         new_po = PurchaseOrder()
         new_po.is_visible = False
@@ -62,6 +55,7 @@ def preview_po(request):
         new_po.contract_number = contract_number
         new_po.payment_method = PaymentMethod.objects.get(pk=payment_method)
         new_po.payment_conditions = PaymentCondition.objects.get(pk=payment_condition)
+        new_po.area = Area.objects.get(pk=user_area)
         new_po.save()
         # crete details
         for new_description, new_quantity, new_price in zip(detail_name, quantity, price):
@@ -71,11 +65,18 @@ def preview_po(request):
             new_detail.price = new_price
             new_detail.save()
             new_po.purchaseorderdetail_set.add(new_detail)
-        new_po.set_order_data(short_name_area)
+        new_po.set_order_data()
         # purchase order was created, we can redirect
         return HttpResponseRedirect(reverse('pos:detail_po', args=[new_po.pk,]))
     else:
         raise Http404
 
 def post_po(request):
-    pass
+    order_id = request.POST.get('order_id')
+    try:
+        order = PurchaseOrder.objects.get(pk=order_id)
+        order.is_visible = True
+        order.save()
+        return HttpResponseRedirect(reverse('pos:detail_po', args=[order.pk,]))
+    except PurchaseOrder.DoesNotExist:
+        raise Http404

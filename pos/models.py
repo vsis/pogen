@@ -7,6 +7,7 @@ class Area(models.Model):
     short_name = models.CharField(max_length=16, null=True, blank=True)
     long_name = models.CharField(max_length=128, null=True, blank=True)
     manager_name = models.CharField(max_length=128, null=True, blank=True)
+    manager_position = models.CharField(max_length=128, null=True, blank=True)
 
     def __str__(self):
         return self.long_name
@@ -57,6 +58,7 @@ class PaymentCondition(models.Model):
 
 
 class PurchaseOrder(models.Model):
+    area = models.ForeignKey(Area, null=True, blank=True)
     yapo_user = models.ForeignKey(YapoUser, null=True, blank=True)
     provider = models.ForeignKey(Provider, null=True, blank=True)
     folio_number = models.CharField(max_length=128, null=True)
@@ -71,18 +73,17 @@ class PurchaseOrder(models.Model):
     def __str__(self):
         return self.folio_number
 
-    def set_folio_number(self, short_name_area=None):
+    def set_folio_number(self):
         self.folio_number = datetime.now().strftime('%Y%m%d%H%M%S')
-        if short_name_area != None:
-            self.folio_number = short_name_area + self.folio_number
+        self.folio_number = self.area.short_name + self.folio_number
 
     def set_total_price(self):
         self.total_price = 0
         for detail in self.purchaseorderdetail_set.all():
             self.total_price += detail.price
 
-    def set_order_data(self, short_area_name=None):
-        self.set_folio_number(short_area_name)
+    def set_order_data(self):
+        self.set_folio_number()
         self.set_total_price()
         self.save()
 

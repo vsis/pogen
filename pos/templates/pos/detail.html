@@ -193,17 +193,17 @@
             </div>
             <div id="order_auth" class="row">
                 <div class="col-xs-3">
-                    <small><strong>Encargado: </strong></small>
+                    <small><strong>Encargado: </strong>{{ object.area.manager_name }}</small>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3">
-                    <small><strong>Cargo: </strong></small>
+                    <small><strong>Cargo: </strong>{{ object.area.manager_position }}</small>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-3">
-                    <small><strong>Área: </strong></small>
+                    <small><strong>Área: </strong>{{ object.area.long_name }}</small>
                 </div>
                 <div class="col-xs-3">
                 </div>
@@ -216,6 +216,14 @@
             <div class="col-xs-6">
                 <strong>Firma</strong>
             </div>
+            {% if not object.is_visible %}
+                <form method="POST" action="{%  url 'pos:post_po' %}">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ object.pk }}" name="order_id">
+                    <input type="submit" value="Guardar orden de compra" class="btn btn-lg btn-success">
+                </form>
+            {% endif %}
         </div>
+        <br><br>
     </body>
 </html>   
