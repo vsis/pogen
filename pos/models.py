@@ -72,7 +72,7 @@ class PurchaseOrder(models.Model):
         return self.folio_number
 
     def set_folio_number(self, short_name_area=None):
-        self.folio_number = datetime.now().strftime('%Y%m%d')
+        self.folio_number = datetime.now().strftime('%Y%m%d%H%M%S')
         if short_name_area != None:
             self.folio_number = short_name_area + self.folio_number
 

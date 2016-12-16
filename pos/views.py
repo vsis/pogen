@@ -62,7 +62,6 @@ def preview_po(request):
         new_po.contract_number = contract_number
         new_po.payment_method = PaymentMethod.objects.get(pk=payment_method)
         new_po.payment_conditions = PaymentCondition.objects.get(pk=payment_condition)
-        new_po.set_order_data(short_name_area)
         new_po.save()
         # crete details
         for new_description, new_quantity, new_price in zip(detail_name, quantity, price):
@@ -72,8 +71,9 @@ def preview_po(request):
             new_detail.price = new_price
             new_detail.save()
             new_po.purchaseorderdetail_set.add(new_detail)
+        new_po.set_order_data(short_name_area)
         # purchase order was created, we can redirect
-        HttpResponseRedirect(reverse('detail_po', args=[new_po.id]))
+        return HttpResponseRedirect(reverse('pos:detail_po', args=[new_po.pk,]))
     else:
         raise Http404
 
