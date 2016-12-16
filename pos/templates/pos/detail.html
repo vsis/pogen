@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <title>Genereador de Órdenes de Compra </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="{% static 'pos/functions.js'  %}"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div id="order_header" class="row">
+                <div class="col-xs-4">
+                    <small>
+                        <strong>Yapo.cl SpA</strong><br>
+                        <span>Mariano Sánchez fontecilla #310, of 1001</span><br>
+                        <span>Las Condez, Santiago de Chile - RM</span><br>
+                        <span>Giro: Comercio electrónico y publicidad</span><br>
+                        <span>RUT: 16.169.003-5</span><br>
+                        <span>Teléfono +56-2-29519287</span><br>
+                    </small>
+                </div>
+                <div class="col-xs-4">
+                </div>
+                <div class="col-xs-4">
+                    <img src="{% static 'pos/logo.jpeg' %}"></img>
+                </div>
+            </div>
+            <div id="order_title" class="row">
+                <div class="col-xs-8">
+                </div>
+                <div class="col-xs-4">
+                    <h4>Orden de compra</h4>
+                    <p><strong>Folio: </strong>{{ object.folio_number }}</p>
+                </div>
+            </div>
+            <div id="order_provider" class="row">
+                <div id="provider_data" class="col-xs-6">
+                    <h5>Proveedor:</h5>
+                    <small>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Razón social</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.name  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Giro</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.business  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Dirección</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.address  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Teléfono</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.phone  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Condiciones de pago</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.payment_condition.name  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Métodos de pago</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.payment_method.name  }}</p>
+                            </div>
+                        </div>
+                    </small>
+                </div>
+                <div id="contact_data" class="col-xs-6">
+                    <h5>Persona de contacto</h5>
+                    <small>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Nombre y Apellidos</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.contact_name  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Cargo / Área</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.contact_area  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Teléfono del contacto</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.contact_phone  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>E-Mail</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.provider.contact_email  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Número de contrato</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.contract_number  }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <strong>Orden de cotización</strong>
+                            </div>
+                            <div class="col-xs-8">
+                                <p>{{ object.quotation_order  }}</p>
+                            </div>
+                        </div>
+                    </small>
+                </div>
+            </div>
+            <div id="order_details" class="jumbotron">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <strong><small>Descripción del producto</small></strong>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong><small>Cantidad</small></strong>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong><small>Importe</small></strong>
+                    </div>
+                </div>
+                {% for detail in object.purchaseorderdetail_set.all %}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <small>{{ detail.description }}</small>
+                        </div>
+                        <div class="col-xs-3">
+                            <small>{{ detail.quantity }}</small>
+                        </div>
+                        <div class="col-xs-3">
+                            <small>{{ detail.price }}</small>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-3">
+                    <strong><small>Moneda</small></strong>
+                </div>
+                <div class="col-zs-3">
+                    <small>{{ object.currency.name }}</small>
+                </div>
+            </div>
+            <div id="order_total" class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-3">
+                    <strong><small>Total sin impuesto</small></strong>
+                </div>
+                <div class="col-xs-3">
+                    <small>{{ object.total_price }}</small>
+                </div>
+            </div>
+            <div id="order_auth" class="row">
+                <div class="col-xs-3">
+                    <small><strong>Encargado: </strong></small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <small><strong>Cargo: </strong></small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <small><strong>Área: </strong></small>
+                </div>
+                <div class="col-xs-3">
+                </div>
+                <div class="col-xs-6">
+                    <strong>--------------------------------</strong>
+                </div>
+            </div>
+            <div class="col-xs-6">
+            </div>
+            <div class="col-xs-6">
+                <strong>Firma</strong>
+            </div>
+        </div>
+    </body>
+</html>   

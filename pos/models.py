@@ -84,6 +84,7 @@ class PurchaseOrder(models.Model):
     def set_order_data(self, short_area_name=None):
         self.set_folio_number(short_area_name)
         self.set_total_price()
+        self.save()
 
 class PurchaseOrderDetail(models.Model):
     purchase_order = models.ForeignKey(PurchaseOrder, null=True, blank=True)

@@ -61,7 +61,7 @@ def preview_po(request):
         new_po.quotation_order = quotation_order
         new_po.contract_number = contract_number
         new_po.payment_method = PaymentMethod.objects.get(pk=payment_method)
-        new_po.payemnt_condition = PaymentCondition.objects.get(pk=payment_condition)
+        new_po.payment_conditions = PaymentCondition.objects.get(pk=payment_condition)
         new_po.set_order_data(short_name_area)
         new_po.save()
         # crete details
