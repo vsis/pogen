@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                             <span id="add_detail" class="btn">
-                                <a href="#" class="btn btn-md btn-info">Nuevo elemento</a>
+                                <a id="add_detail_btn" href="#" class="btn btn-md btn-info">Nuevo elemento</a>
                             </span>
                             <script>
                                 var detail_rows=0
@@ -115,6 +115,9 @@
                                         if (detail_rows < 6){
                                             $("#po_details").clone(true).insertBefore("#add_detail");
                                             detail_rows++;
+                                        }
+                                        if (detail_rows >= 6){
+                                            $("#add_detail").addClass("hidden");
                                         }
                                         return false;
                                 });
