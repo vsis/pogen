@@ -98,7 +98,18 @@
                                     </select>
                                 </div>
                             </div>
-                            <div id="po_details" class="row marketing">
+                            <div id="po_details" class="row marketing hidden">
+                                <div class="col-xs-6">
+                                    <input name="detail_name[]" type="text" class="form-control" placeholder="Concepto">
+                                </div>
+                                <div class="col-xs-2">
+                                    <input name="quantity[]" type="text" class="form-control" placeholder="Cantidad">
+                                </div>
+                                <div class="col-xs-2">
+                                    <input name="price[]" type="text" class="form-control" placeholder="Importe">
+                                </div>
+                            </div>
+                            <div class="row marketing">
                                 <div class="col-xs-6">
                                     <input name="detail_name[]" type="text" class="form-control" placeholder="Concepto">
                                 </div>
@@ -116,7 +127,10 @@
                                 var detail_rows=0
                                 $("#add_detail").click(function() {
                                         if (detail_rows < 6){
-                                            $("#po_details").clone(true).insertBefore("#add_detail");
+                                            var new_detail = $("#po_details").clone(true);
+                                            new_detail.insertBefore("#add_detail");
+                                            new_detail.removeClass('hidden');
+                                            new_detail.removeAttr('id');
                                             detail_rows++;
                                         } else {
                                             $("#add_detail").addClass("hidden");
