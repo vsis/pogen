@@ -77,6 +77,9 @@
                                     <input type="text" class="form-control" id="contactEmail" value="{{ provider.contact_email }}" disabled>
                                 </div>
                             </div>
+                            <script>
+                                show_provider($('#provider').val())
+                            </script>
                             {% endfor %}
                         </div>
                     </div>
