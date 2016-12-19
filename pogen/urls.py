@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+import pos
 
 urlpatterns = [
     url(r'^pos/', include('pos.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^$', pos.views.ListView.as_view(), name='list_po'),
 ]

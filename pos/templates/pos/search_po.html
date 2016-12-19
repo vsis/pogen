@@ -22,24 +22,31 @@
                 </div>
             </div>
             <div class="jumbotron">
-                <div class="btn-group">
-                    <a href="{% url 'pos:new_po'  %}" class="btn btn-md btn-success">Nueva orden de compra</a>
-                    <a href="{% url 'pos:search_po'  %}" class="btn btn-md btn-info">Buscar</a>
-                    <a href="/admin" class="btn btn-md btn-info">Administración</a>
+                <div class="col-xs-4">
+                    <select class="form-control" id="provider" name="provider">
+                        <option value="0">Todos lo proveedores</option>
+                        {% for provider in providers %}
+                            <option value="{{ provider.pk }}">{{ provider.name  }}</option>
+                        {% endfor %}
+                     </select>
                 </div>
-                {% for order in pos_list %}
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <a href="{% url 'pos:detail_po' pk=order.pk %}">{{ order.folio_number }}</a>
-                        </div>
-                        <div class="col-xs-4">
-                            {{ order.provider.name }}
-                        </div>
-                        <div class="col-xs-4">
-                            {{ order.total_price }} {{ order.currency.name }}
-                        </div>
-                    </div>
-                {% endfor %}
+                <div class="col-xs-4">
+                    <select class="form-control" id="area" name="area">
+                        <option value="0">Todas las áreas</option>
+                        {% for area in areas %}
+                            <option value="{{ area.pk }}">{{ area.short_name  }} - {{ area.long_name }}</option>
+                        {% endfor %}
+                     </select>
+                </div>
+                <div class="col-xs-4">
+                    <a id="search-btn" href="#" class="btn btn-md btn-info">Buscar</a>
+                </div>
+                <script>
+                    $("#search-btn").click(function (){
+                        var search_url = "/pos/filter/" + $("#provider").val() + "/" + $("#area").val();
+                        window.location.href = search_url;
+                    });
+                </script>
             </div>
         </div>
     </body>

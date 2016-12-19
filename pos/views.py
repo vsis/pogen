@@ -52,3 +52,21 @@ def post_po(request):
         return HttpResponseRedirect(reverse('pos:detail_po', args=[order.pk,]))
     except PurchaseOrder.DoesNotExist:
         raise Http404
+def search_po(request):
+    areas = Area.objects.all()
+    providers = Provider.objects.filter(is_visible=True)
+    return render(request, 'pos/search_po.html',
+            {
+                'areas': areas,
+                'providers': providers,
+            }
+    )
+
+def filter_po(request, provider=0, area=0):
+    pos_list = PurchaseOrder.objects.filter(is_visible=True).order_by('-pk')
+    if provider != '0':
+        pos_list = pos_list.filter(provider__pk=provider)
+    if area != '0':
+        pos_list = pos_list.filter(area__pk=area)
+    return render(request, 'pos/pos_list.html', {'pos_list': pos_list})
+
