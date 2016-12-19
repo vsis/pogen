@@ -10,4 +10,7 @@ docker-run:
 docker-rm:
 	docker rm -f purchase-orders-$(USER)
 
-.PHONY: docker-build docker-run docker-rm
+run:
+	python3 manage.py runserver 0.0.0.0:8080
+
+.PHONY: docker-build docker-run docker-rm run
