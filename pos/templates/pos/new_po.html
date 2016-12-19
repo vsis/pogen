@@ -115,8 +115,7 @@
                                         if (detail_rows < 6){
                                             $("#po_details").clone(true).insertBefore("#add_detail");
                                             detail_rows++;
-                                        }
-                                        if (detail_rows >= 6){
+                                        } else {
                                             $("#add_detail").addClass("hidden");
                                         }
                                         return false;
