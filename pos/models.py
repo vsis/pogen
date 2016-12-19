@@ -87,6 +87,55 @@ class PurchaseOrder(models.Model):
         self.set_total_price()
         self.save()
 
+    def create_from_request(request):
+        # get data
+        detail_name = request.POST.getlist('detail_name[]')
+        quantity = request.POST.getlist('quantity[]')
+        price = request.POST.getlist('price[]')
+        currency = request.POST.get('currency')
+        provider = request.POST.get('provider')
+        quotation_order = request.POST.get('quotation_order')
+        payment_method = request.POST.get('payment_method')
+        payment_condition = request.POST.get('payment_condition')
+        contract_number = request.POST.get('contract_number')
+        user_area = request.POST.get('user_area')
+        # create purchase order
+        new_po = PurchaseOrder()
+        new_po.is_visible = False
+        new_po.quotation_order = quotation_order
+        new_po.contract_number = contract_number
+        # Try to get currency, provider, payment data and area, form ids given in request
+        try:
+            new_po.currency = Currency.objects.get(pk=currency)
+            new_po.provider = Provider.objects.get(pk=provider)
+            new_po.payment_method = PaymentMethod.objects.get(pk=payment_method)
+            new_po.payment_conditions = PaymentCondition.objects.get(pk=payment_condition)
+            new_po.area = Area.objects.get(pk=user_area)
+            # Save this po. If invalid data found, it will raise a ValueError
+            new_po.save()
+        except (ValueError, Currency.DoesNotExist, Provider.DoesNotExist,
+            PaymentMethod.DoesNotExist, PaymentConditions.DoesNotExist):
+            return None
+        # crete details
+        for new_description, new_quantity, new_price in zip(detail_name, quantity, price):
+            # Ignore empty details
+            if (new_description == '') or (new_quantity == '') or (new_price == ''):
+                continue
+            new_detail = PurchaseOrderDetail()
+            new_detail.description = new_description
+            new_detail.quantity = new_quantity
+            new_detail.price = new_price
+            try:
+                # If a detail have invalid data, ti will raise a ValueError
+                new_detail.save()
+            except ValueError:
+                new_po.delete()
+                return None
+            new_po.purchaseorderdetail_set.add(new_detail)
+        new_po.set_order_data()
+        # purchase order was created, we can redirect
+        return new_po
+
 class PurchaseOrderDetail(models.Model):
     purchase_order = models.ForeignKey(PurchaseOrder, null=True, blank=True)
     description = models.CharField(max_length=128, null=True, blank=True)
