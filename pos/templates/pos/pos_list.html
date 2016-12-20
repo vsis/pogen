@@ -27,16 +27,33 @@
                     <a href="{% url 'pos:search_po'  %}" class="btn btn-md btn-info">Buscar</a>
                     <a href="/admin" class="btn btn-md btn-info">Administración</a>
                 </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <strong>Folio</strong>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong>Proveedor</strong>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong>Total sin IVA</strong>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong>Total con IVA</strong>
+                    </div>
+                </div>    
                 {% for order in pos_list %}
                     <div class="row">
-                        <div class="col-xs-4">
+                        <div class="col-xs-3">
                             <a href="{% url 'pos:detail_po' pk=order.pk %}">{{ order.folio_number }}</a>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-3">
                             {{ order.provider.name }}
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-xs-3">
                             {{ order.total_price }} {{ order.currency.name }}
+                        </div>
+                        <div class="col-xs-3">
+                            {{ order.total_iva_price }} {{ order.currency.name }}
                         </div>
                     </div>
                 {% endfor %}

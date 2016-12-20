@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+import math
 
 
 class Area(models.Model):
@@ -67,6 +68,7 @@ class PurchaseOrder(models.Model):
     contract_number = models.CharField(max_length=128, null=True, blank=True)
     quotation_order = models.CharField(max_length=128, null=True, blank=True)
     total_price = models.IntegerField(null=True, blank=True)
+    total_iva_price = models.IntegerField(null=True, blank=True)
     currency = models.ForeignKey(Currency, null=True, blank=True)
     is_visible = models.BooleanField(default=True)
 
@@ -79,8 +81,10 @@ class PurchaseOrder(models.Model):
 
     def set_total_price(self):
         self.total_price = 0
+        self.total_iva_price = 0
         for detail in self.purchaseorderdetail_set.all():
-            self.total_price += detail.price
+            self.total_price += detail.get_collective_price()
+            self.total_iva_price += detail.get_iva_collective_price()
 
     def set_order_data(self):
         self.set_folio_number()
@@ -92,6 +96,7 @@ class PurchaseOrder(models.Model):
         detail_name = request.POST.getlist('detail_name[]')
         quantity = request.POST.getlist('quantity[]')
         price = request.POST.getlist('price[]')
+        iva = request.POST.getlist('iva[]')
         currency = request.POST.get('currency')
         provider = request.POST.get('provider')
         quotation_order = request.POST.get('quotation_order')
@@ -117,7 +122,7 @@ class PurchaseOrder(models.Model):
             PaymentMethod.DoesNotExist, PaymentCondition.DoesNotExist):
             return None
         # crete details
-        for new_description, new_quantity, new_price in zip(detail_name, quantity, price):
+        for new_description, new_quantity, new_price, new_iva in zip(detail_name, quantity, price, iva):
             # Ignore empty details
             if (new_description == '') or (new_quantity == '') or (new_price == ''):
                 continue
@@ -125,6 +130,7 @@ class PurchaseOrder(models.Model):
             new_detail.description = new_description
             new_detail.quantity = new_quantity
             new_detail.price = new_price
+            new_detail.has_iva = new_iva == "1"
             try:
                 # If a detail have invalid data, ti will raise a ValueError
                 new_detail.save()
@@ -141,7 +147,17 @@ class PurchaseOrderDetail(models.Model):
     description = models.CharField(max_length=128, null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True)
     price = models.IntegerField(null=True, blank=True)
+    has_iva = models.BooleanField(default=False)
     currency = models.ForeignKey(Currency, null=True, blank=True)
+
+    def get_collective_price(self):
+        return self.price * self.quantity
+
+    def get_iva_collective_price(self):
+        if self.has_iva:
+            IVA = 1.19
+            return math.ceil(self.get_collective_price() * IVA)
+        return self.get_collective_price()
 
     def __str__(self):
         return self.description

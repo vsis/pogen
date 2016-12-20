@@ -98,6 +98,20 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <strong>Producto</strong>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Cantidad</strong>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Importe unitario</strong>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Afecto a IVA</strong>
+                                </div>
+                            </div>
                             <div id="po_details" class="row marketing hidden">
                                 <div class="col-xs-6">
                                     <input name="detail_name[]" type="text" class="form-control" placeholder="Concepto">
@@ -107,6 +121,9 @@
                                 </div>
                                 <div class="col-xs-2">
                                     <input name="price[]" type="number" class="form-control" placeholder="Importe">
+                                </div>
+                                <div class="col-xs-2">
+                                    <input name="iva[]" value="1" type="checkbox" class="form-control">
                                 </div>
                             </div>
                             <div class="row marketing">
@@ -118,6 +135,9 @@
                                 </div>
                                 <div class="col-xs-2">
                                     <input name="price[]" type="number" class="form-control" placeholder="Importe">
+                                </div>
+                                <div class="col-xs-2">
+                                    <input name="iva[]" value="1" type="checkbox" class="form-control">
                                 </div>
                             </div>
                             <span id="add_detail" class="btn">
@@ -193,6 +213,17 @@
                 </a>
             </div>
         </div>
-    </form></body>
+    </form>
+    <script>
+        $('form').submit(function(e){
+            var b = $("input:checkbox:not(:checked)");
+            $(b).each(function () {
+                $(this).val("0");
+                $(this).attr("checked", true);
+            });
+            return true;
+        });
+    </script>
+    </body>
 </html>
 

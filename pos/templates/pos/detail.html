@@ -147,26 +147,38 @@
             </div>
             <div id="order_details" class="jumbotron">
                 <div class="row">
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
                         <strong><small>Descripción del producto</small></strong>
                     </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-1">
                         <strong><small>Cantidad</small></strong>
                     </div>
                     <div class="col-xs-3">
-                        <strong><small>Importe</small></strong>
+                        <strong><small>Importe unidad sin IVA</small></strong>
+                    </div>
+                    <div class="col-xs-3">
+                        <strong><small>Importe grupal sin IVA</small></strong>
+                    </div>
+                    <div class="col-xs-1">
+                        <strong><small>Afecto a IVA</small></strong>
                     </div>
                 </div>
                 {% for detail in object.purchaseorderdetail_set.all %}
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-xs-4">
                             <small>{{ detail.description }}</small>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-1">
                             <small>{{ detail.quantity }}</small>
                         </div>
                         <div class="col-xs-3">
                             <small>{{ detail.price }}</small>
+                        </div>
+                        <div class="col-xs-3">
+                            <small>{{ detail.get_collective_price }}</small>
+                        </div>
+                        <div class="col-xs-1">
+                            <small>{% if detail.has_iva %} Sí {% else %} No {% endif %}</small>
                         </div>
                     </div>
                 {% endfor %}
@@ -185,12 +197,23 @@
                 <div class="col-xs-6">
                 </div>
                 <div class="col-xs-3">
-                    <strong><small>Total sin impuesto</small></strong>
+                    <strong><small>Total sin IVA</small></strong>
                 </div>
                 <div class="col-xs-3">
                     <small>{{ object.total_price }}</small>
                 </div>
             </div>
+            <div id="order_total" class="row">
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-3">
+                    <strong><small>Total con IVA</small></strong>
+                </div>
+                <div class="col-xs-3">
+                    <small>{{ object.total_iva_price }}</small>
+                </div>
+            </div>
+            
             <div id="order_auth" class="row">
                 <div class="col-xs-3">
                     <small><strong>Encargado: </strong>{{ object.area.manager_name }}</small>
