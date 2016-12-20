@@ -36,3 +36,8 @@ Alternatively, you can run it listeninig port `80`
 ```
 make run-80
 ```
+
+And, if you are running it for first time, you need to initialize database
+```
+make init-database
+```
