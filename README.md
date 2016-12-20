@@ -24,7 +24,7 @@ make docker-init-database
 First, you need to install dependencies
 ```
 yum install python34 python34-pip
-pyp3 install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Then, if you want it to listen in port `8080`
