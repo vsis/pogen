@@ -114,7 +114,7 @@ class PurchaseOrder(models.Model):
             # Save this po. If invalid data found, it will raise a ValueError
             new_po.save()
         except (ValueError, Currency.DoesNotExist, Provider.DoesNotExist,
-            PaymentMethod.DoesNotExist, PaymentConditions.DoesNotExist):
+            PaymentMethod.DoesNotExist, PaymentCondition.DoesNotExist):
             return None
         # crete details
         for new_description, new_quantity, new_price in zip(detail_name, quantity, price):
