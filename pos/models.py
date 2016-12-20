@@ -71,6 +71,7 @@ class PurchaseOrder(models.Model):
     total_iva_price = models.IntegerField(null=True, blank=True)
     currency = models.ForeignKey(Currency, null=True, blank=True)
     is_visible = models.BooleanField(default=True)
+    date = models.DateField(null=True, blank=True, auto_now=True)
 
     def __str__(self):
         return self.folio_number
